@@ -24,6 +24,14 @@ app.post("/webhook", (request, response) => {
       }).catch(error => {
           response.json({ fulfillmentText: 'Dados de acesso inválidos.' });
       });
+  } else if(intent === 'listar-usuarios') {
+      axios.get("https://reqres.in/api/users/2").then(apiRes => {
+          console.log(apiRes);
+          const nome = `${apiRes.data.data.first_name} ${apiRes.data.data.last_name}`;
+           response.json({ fulfillmentText: `Você conhece a ${nome}?` });
+      }).catch(error => {
+          response.json({ fulfillmentText: 'Dados de acesso inválidos.' });
+      });
   } else {
       response.json({ fulfillmentText: 'Poxa! Não sei como te ajudar...' });
   }
